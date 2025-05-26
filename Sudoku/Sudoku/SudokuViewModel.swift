@@ -8,15 +8,7 @@
 import Foundation
 
 final class SudokuViewModel: ObservableObject {
-    
-    @Published var board: SudokuBoard
-    
-    init() {
-  //     board[0][0].value = 5
-  //      board[1][1].value = 3
-        self.board = SudokuBoard()
-    }
-    
+        
     
     
 
