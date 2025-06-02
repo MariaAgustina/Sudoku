@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WelcomeView: View {
     
-    @State var level: String = ""
+    @State var level: String = "medio"
 
     var body: some View {
         NavigationStack {
@@ -21,7 +21,7 @@ struct WelcomeView: View {
                 Image("welcomeSudoku")
                     .padding([.bottom, .top], 50)
                 NavigationLink("Empezar a jugar") {
-                    
+                    SudokuBoardView()
                 }
                 .frame(width: 300, height: 50, alignment: .center)
                 .background(Color(red: 0, green: 100, blue: 0))
