@@ -33,10 +33,40 @@ struct SudokuBoardButton: View {
             .background(backgroundButtonColor)
             .cornerRadius(10)
             .border(.black)
+            .overlay( //borde superior
+                Group {
+                    if i == 0 || i == 3 || i == 6 {
+                        Rectangle()
+                            .frame(height: 2)
+                            .foregroundColor(.black)
+                    }
+                },
+                alignment: .top
+            )
+            .overlay( //borde inferior
+                Group {
+                    if i == 2 || i == 5 || i == 8 {
+                        Rectangle()
+                            .frame(height: 2)
+                            .foregroundColor(.black)
+                    }
+                },
+                alignment: .bottom
+            )
+            .overlay( //borde izquierdo
+                Group {
+                    if j == 0 || j == 3 || j == 6 {
+                        Rectangle()
+                            .frame(width: 4)
+                            .foregroundColor(.black)
+                    }
+                },
+                alignment: .leading
+            )
         }
     }
 }
 
 #Preview {
-    //SudokuBoardButton(value: 1)
+    //SudokuBoardButton(sudokuBoard: SudokuBoard(level: "facil"), positionX: 0, positionY: 0)
 }
