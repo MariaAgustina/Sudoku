@@ -10,20 +10,27 @@ import SwiftUI
 struct SudokuBoardButton: View {
     
     @ObservedObject var sudokuBoard: SudokuBoard
+    @State var backgroundButtonColor: Color = .white
+
+    @Binding var positionX: Int
+    @Binding var positionY: Int
+
     var i: Int = 0
     var j: Int = 0
 
     var body: some View {
-        VStack{
-            Button("\(sudokuBoard.board[i][j])"){
-                sudokuBoard.board[i][j] = 4
+        VStack{            
+            Button(
+                sudokuBoard.getButtonText(i: i, j: j)
+            ){
+                positionX = i
+                positionY = j
                 sudokuBoard.printBoard()
-                print("\(i)")
-                print("\(j)")
+                backgroundButtonColor = .mint
             }
-            .frame(width: 30, height: 30)
+            .frame(width: 40, height: 40)
             .foregroundColor(.black)
-            .background(.white)
+            .background(backgroundButtonColor)
             .cornerRadius(10)
             .border(.black)
         }

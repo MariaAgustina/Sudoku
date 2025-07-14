@@ -8,28 +8,52 @@
 import SwiftUI
 
 final class SudokuBoard: ObservableObject {
+    typealias Position = (Int, Int)
     
-    @Published var board: [[Int]] 
+    @Published var board: [[Int]]
+    var level: String = "facil"
     
-    init() {
+    init(level: String) {
         self.board = Array(repeating: Array(repeating: 0, count: 9), count: 9)
+        self.level = level
         self.load()
     }
     
     func load() {
-        self.board[0][0] = 2
-        self.board[0][2] = 5
-        self.board[0][5] = 9
-        self.board[0][8] = 4
+        let number = Int.random(in: 1...4)
+        let nameFile = level.lowercased() + "-" + String(number)
         
-        self.board[1][6] = 3
-        self.board[1][8] = 7
+        guard let path = Bundle.main.path(forResource: nameFile, ofType: "csv") else {
+            print("Archivo no encontrado.")
+            return
+        }
         
-        self.board[2][0] = 7
-        self.board[2][3] = 8
-        self.board[2][4] = 5
-        self.board[2][5] = 6
-        self.board[2][7] = 1
+        print("Archivo cargado: \(nameFile)")
+        
+        do {
+            let data = try String(contentsOfFile: path)
+            let lines = data.components(separatedBy: .newlines)
+            for line in lines {
+                let components = line.split(separator: ",")
+                print(components)
+                if components.count == 3 {
+                    let positionX: Int = Int(components[0]) ?? 0
+                    let positionY: Int = Int(components[1]) ?? 0
+                    let value: Int = Int(components[2]) ?? 0
+                    self.board[positionX][positionY] = value
+                }
+            }
+        } catch {
+            print("Error al leer el archivo: \(error)")
+        }
+
+    }
+    
+    func getButtonText(i: Int, j: Int) -> String {
+        if board[i][j] == 0 {
+            return " "
+        }
+        return "\(board[i][j])"
     }
     
     func printBoard() {
